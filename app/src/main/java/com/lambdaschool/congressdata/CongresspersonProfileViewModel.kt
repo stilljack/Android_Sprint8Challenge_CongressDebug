@@ -1,7 +1,8 @@
 package com.lambdaschool.congressdata
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 
 class CongresspersonProfileViewModel(var id: String?) : ViewModel() {
     var profile: LiveData<CongresspersonProfile>? = null

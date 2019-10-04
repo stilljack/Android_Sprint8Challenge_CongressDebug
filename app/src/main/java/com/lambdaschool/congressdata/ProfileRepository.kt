@@ -1,10 +1,10 @@
 package com.lambdaschool.congressdata
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.lambdaschool.congressdata.congressdataapiaccess.CongressDao
 
-import com.lambdaschool.congressdataapiaccess.CongressDao
 
 object ProfileRepository {
     fun getProfile(id: String?): LiveData<CongresspersonProfile> {

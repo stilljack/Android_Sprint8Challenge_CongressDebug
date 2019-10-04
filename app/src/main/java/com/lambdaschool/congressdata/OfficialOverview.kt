@@ -1,6 +1,7 @@
 package com.lambdaschool.congressdata
 
-import com.lambdaschool.congressdataapiaccess.CongresspersonOverview
+import com.lambdaschool.congressdata.congressdataapiaccess.CongresspersonOverview
+
 
 class OfficialOverview {
     private var firstName: String? = null

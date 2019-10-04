@@ -1,11 +1,11 @@
 package com.lambdaschool.congressdata
 
 import android.graphics.Bitmap
+import com.lambdaschool.congressdata.congressdataapiaccess.Committee
+import com.lambdaschool.congressdata.congressdataapiaccess.CongressDao
+import com.lambdaschool.congressdata.congressdataapiaccess.CongresspersonDetails
+import com.lambdaschool.congressdata.congressdataapiaccess.Subcommittee
 
-import com.lambdaschool.congressdataapiaccess.Committee
-import com.lambdaschool.congressdataapiaccess.CongressDao
-import com.lambdaschool.congressdataapiaccess.CongresspersonDetails
-import com.lambdaschool.congressdataapiaccess.Subcommittee
 
 import org.json.JSONArray
 import org.json.JSONException
