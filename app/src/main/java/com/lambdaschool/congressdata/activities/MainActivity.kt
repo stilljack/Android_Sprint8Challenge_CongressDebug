@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.congressdata.R
 import com.lambdaschool.congressdata.importedjava.CongressDao.getAllMembers
 import com.lambdaschool.congressdata.importedjava.CongresspersonOverview
+import com.lambdaschool.congressdata.importedjava.NetworkAdapter
 import com.lambdaschool.congressdata.model.OfficialOverview
 import com.lambdaschool.congressdata.viewmodel.CongresspersonListViewModel
 import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter
@@ -66,8 +67,11 @@ class MainActivity : AppCompatActivity() {
         layoutList = layout_list
         viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
         setupRecyclerView()
-        btn_test.setOnClickListener {  }
-        updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
+        btn_test.setOnClickListener {
+            tv_test.text=NetworkAdapter.httpGetRequest("http://google.com")
+            updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
+        }
+
     }
 
     override fun setTheme(themeId: Int) {
