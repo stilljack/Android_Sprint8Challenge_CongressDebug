@@ -7,6 +7,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,11 +17,17 @@ import com.lambdaschool.congressdata.R
 import com.lambdaschool.congressdata.importedjava.CongressDao.getAllMembers
 import com.lambdaschool.congressdata.importedjava.CongresspersonOverview
 import com.lambdaschool.congressdata.importedjava.NetworkAdapter
+import com.lambdaschool.congressdata.model.ApiRetro
 import com.lambdaschool.congressdata.model.OfficialOverview
 import com.lambdaschool.congressdata.viewmodel.CongresspersonListViewModel
 import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter
 import com.lambdaschool.congressdata.viewmodel.themeUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 
 /*public class MainActivity extends LifecycleActivity  {
@@ -53,6 +60,7 @@ class MainActivity : AppCompatActivity() {
 
     private var context: Context? = null
     private lateinit var viewModel: CongresspersonListViewModel
+    val retro=ApiRetro.Factory.create()
 
     var themeId: Int = 0
         private set
@@ -68,11 +76,45 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
         setupRecyclerView()
         btn_test.setOnClickListener {
-            tv_test.text=NetworkAdapter.httpGetRequest("http://google.com")
-            updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
-        }
+            tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
 
+            CoroutineScope(Dispatchers.IO).launch {
+
+               // updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
+                val response = retro.getMemmbersAll()
+                withContext(Dispatchers.Main) {
+                    try {
+                        if (response.isSuccessful) {
+                            //Do something with response e.g show to the UI.
+
+                            updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
+                        } else {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Error: ${response.code()}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } catch (e: HttpException) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Error: ${e.message()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Error: ${e.printStackTrace()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                }
+            }
+        }
     }
+
 
     override fun setTheme(themeId: Int) {
         super.setTheme(themeId)
@@ -124,21 +166,54 @@ class MainActivity : AppCompatActivity() {
         layoutList.layoutManager = layoutManager
         listAdapter = OverviewListAdapter()
         layoutList.adapter = listAdapter
-        viewModel.overviewList?.observe(this, Observer {
+        CoroutineScope(Dispatchers.IO).launch {
 
-                it?.let {
-                    updateRecyclerView(listAdapter,it)
+            // updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
+            val response = retro.getMemmbersAll()
+            withContext(Dispatchers.Main) {
+                try {
+                    if (response.isSuccessful) {
+                        //Do something with response e.g show to the UI.
+
+                        updateRecyclerView(
+                            listAdapter,
+                            response.body() as ArrayList<OfficialOverview>
+                        )
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Error: ${response.code()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: HttpException) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error: ${e.message()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Throwable) {
+                    e.printStackTrace()
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Error: ${e.printStackTrace()}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-        })
 
+            }
+
+
+        }
 
     }
-
-
-    fun updateRecyclerView(adapter: OverviewListAdapter,congoList:ArrayList<OfficialOverview>) {
-        adapter.submitList(congoList as ArrayList<OfficialOverview>)
-        adapter.notifyDataSetChanged()
-    }
+        fun updateRecyclerView(
+            adapter: OverviewListAdapter,
+            congoList: ArrayList<OfficialOverview>
+        ) {
+            adapter.submitList(congoList as ArrayList<OfficialOverview>)
+            adapter.notifyDataSetChanged()
+        }
 
 
 }

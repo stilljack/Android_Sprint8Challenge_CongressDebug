@@ -4,7 +4,7 @@ package com.lambdaschool.congressdata.importedjava;
 import org.json.JSONObject;
 
 public class CongresspersonOverview {
-  
+
     // SerializedName("id")
     private String id;
     // SerializedName("title")

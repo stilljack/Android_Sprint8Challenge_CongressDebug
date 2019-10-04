@@ -4,9 +4,9 @@ package com.lambdaschool.congressdata.model
 
 import android.widget.Toast
 import com.google.gson.Gson
-import com.lambdaschool.congressdata.model.ApiInterface.Factory.Companion.BASE_URL
-import com.lambdaschool.congressdata.model.ApiInterface.Factory.Companion.URL_MEMBERS_HOUSE_ALL
-import com.lambdaschool.congressdata.model.ApiInterface.Factory.Companion.URL_MEMBERS_HOUSE_CALIFORNIA
+import com.lambdaschool.congressdata.model.ApiRetro.Factory.Companion.URL_MEMBERS_HOUSE_ALL
+import com.lambdaschool.congressdata.model.ApiRetro.Factory.Companion.URL_MEMBERS_HOUSE_CALIFORNIA
+
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,18 +21,20 @@ import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 
-interface ApiInterface {
+interface ApiRetro {
 
 
     @Headers(
         "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
     )
     @GET(URL_MEMBERS_HOUSE_CALIFORNIA)
-    fun getCACongressList(): Call<List<OfficialOverview>>
+    fun getCACongressList(): Call<List<CongressPersonAll.Result.Member>>
 
-
+    @Headers(
+        "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
+    )
     @GET(URL_MEMBERS_HOUSE_ALL)
-    fun getPokemonForm(): Call<OfficialOverview>
+    suspend fun getMemmbersAll(): Response<List<OfficialOverview>>
 
     @GET("pokemon-species/{name}")
     fun getPokemonDetails(@Path("name") name: String): Call<List<OfficialOverview>>
@@ -83,7 +85,7 @@ interface ApiInterface {
             val gson = Gson()
 
 
-            fun create(): ApiInterface {
+            fun create(): ApiRetro {
 
                 val logger = HttpLoggingInterceptor()
                 logger.level = HttpLoggingInterceptor.Level.BASIC
@@ -101,7 +103,7 @@ interface ApiInterface {
                     .addConverterFactory(GsonConverterFactory.create(gson)) //gson
                     .build()
 
-                return retrofit.create(ApiInterface::class.java)
+                return retrofit.create(ApiRetro::class.java)
             }
         }
     }

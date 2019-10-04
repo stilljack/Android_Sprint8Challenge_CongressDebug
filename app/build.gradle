@@ -89,6 +89,7 @@ dependencies {
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestRuntimeOnly "de.mannodermaus.junit5:android-instrumentation-test-runner:$junit5_runner"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.1'
 
     // add for espresso S08M4-1
     testImplementation "androidx.test.ext:truth:1.2.0"
