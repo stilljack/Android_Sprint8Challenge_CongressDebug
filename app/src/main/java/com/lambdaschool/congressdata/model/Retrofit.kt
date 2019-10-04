@@ -4,6 +4,9 @@ package com.lambdaschool.congressdata.model
 
 import android.widget.Toast
 import com.google.gson.Gson
+import com.lambdaschool.congressdata.model.ApiInterface.Factory.Companion.BASE_URL
+import com.lambdaschool.congressdata.model.ApiInterface.Factory.Companion.URL_MEMBERS_HOUSE_ALL
+import com.lambdaschool.congressdata.model.ApiInterface.Factory.Companion.URL_MEMBERS_HOUSE_CALIFORNIA
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -12,19 +15,24 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.Path
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 
 interface ApiInterface {
 
 
+    @Headers(
+        "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
+    )
+    @GET(URL_MEMBERS_HOUSE_CALIFORNIA)
+    fun getCACongressList(): Call<OfficialOverview>
 
-    @GET("pokedex/{id}")
-    fun getPokedex(@Path("id") id:String): Call<OfficialOverview>
 
-    @GET("pokemon-form/{name}")
-    fun getPokemonForm(@Path("name") name: String): Call<OfficialOverview>
+    @GET(URL_MEMBERS_HOUSE_ALL)
+    fun getPokemonForm(): Call<OfficialOverview>
 
     @GET("pokemon-species/{name}")
     fun getPokemonDetails(@Path("name") name: String): Call<OfficialOverview>
@@ -40,10 +48,38 @@ interface ApiInterface {
 
     class Factory {
         companion object {
+            const val API_KEY = "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
+         //   connection.setRequestProperty("x-api-key", API_KEY);
+            const val BASE_URL = "https://api.propublica.org/congress/v1/"
+
+            const val URL_MEMBERS_HOUSE_CALIFORNIA = BASE_URL + "members/house/CA/current.json"
+           const val CONGRESS_NUMBER = "115"
+          const val URL_MEMBERS_HOUSE_ALL = BASE_URL + CONGRESS_NUMBER + "/house/members.json"
+           const  val URL_MEMBERS_SENATE_CALIFORNIA = BASE_URL + "members/senate/CA/current.json"
+           const val URL_MEMBERS_SENATE_ALL = BASE_URL + CONGRESS_NUMBER + "/senate/members.json"
+
+           const val MEMBER_DETAILS = BASE_URL + "members/"
+
+           const val IMAGE_URL = "https://theunitedstates.io/images/congress/450x550/"
+
+            const  val JPG = ".jpg"
+            const val JSON = ".json"
+
+
+
+
+
+
+
+
+
+
+
+
+
             private val TIMEOUT = 3000
-            private val API_KEY = "glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
+            
             var pokedexList = mutableListOf<OfficialOverview>()
-            val BASE_URL = "https://pokeapi.co/api/v2/"
             val gson = Gson()
 
 
