@@ -1,4 +1,4 @@
-package com.lambdaschool.congressdata.congressdataapiaccess;
+package com.lambdaschool.congressdata.importedjava;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

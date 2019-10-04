@@ -1,5 +1,5 @@
 
-package com.lambdaschool.congressdata.congressdataapiaccess;
+package com.lambdaschool.congressdata.importedjava;
 
 import org.json.JSONObject;
 

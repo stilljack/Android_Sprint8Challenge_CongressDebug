@@ -1,10 +1,10 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.model
 
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.lambdaschool.congressdata.congressdataapiaccess.CongressDao
+import com.lambdaschool.congressdata.importedjava.CongressDao
 
 import java.util.ArrayList
 

@@ -1,4 +1,4 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.activities
 
 import android.app.Activity
 
@@ -16,6 +16,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.lambdaschool.congressdata.model.CongresspersonProfile
+import com.lambdaschool.congressdata.R
+import com.lambdaschool.congressdata.viewmodel.CongresspersonProfileViewModel
+import com.lambdaschool.congressdata.viewmodel.themeUtils
 
 class DetailsActivity : AppCompatActivity() {
 

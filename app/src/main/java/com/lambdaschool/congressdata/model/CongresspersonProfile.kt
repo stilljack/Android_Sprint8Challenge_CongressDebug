@@ -1,10 +1,10 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.model
 
 import android.graphics.Bitmap
-import com.lambdaschool.congressdata.congressdataapiaccess.Committee
-import com.lambdaschool.congressdata.congressdataapiaccess.CongressDao
-import com.lambdaschool.congressdata.congressdataapiaccess.CongresspersonDetails
-import com.lambdaschool.congressdata.congressdataapiaccess.Subcommittee
+import com.lambdaschool.congressdata.importedjava.Committee
+import com.lambdaschool.congressdata.importedjava.CongressDao
+import com.lambdaschool.congressdata.importedjava.CongresspersonDetails
+import com.lambdaschool.congressdata.importedjava.Subcommittee
 
 
 import org.json.JSONArray
@@ -57,9 +57,12 @@ class CongresspersonProfile(
         this.votesWithPartyPct = java.lang.Float.parseFloat(votesWithPartyPct)
         this.displayName = buildDisplayName()
         when (party) {
-            "R" -> this.party = REPUBLICAN
-            "D" -> this.party = DEMOCRAT
-            "I" -> this.party = INDEPENDENT
+            "R" -> this.party =
+                REPUBLICAN
+            "D" -> this.party =
+                DEMOCRAT
+            "I" -> this.party =
+                INDEPENDENT
         }
     }
 
@@ -103,7 +106,9 @@ class CongresspersonProfile(
     }
 
     fun setCommittees(committeesJson: JSONArray) {
-        this.committees = parseJsonList(committeesJson, COMMITTEE_DETAIL_TARGET)
+        this.committees = parseJsonList(committeesJson,
+            COMMITTEE_DETAIL_TARGET
+        )
     }
 
     fun setCommittees(committees: List<Committee>) {
@@ -114,7 +119,9 @@ class CongresspersonProfile(
     }
 
     fun setSubcommittees(subcommitteesJson: JSONArray) {
-        this.committees = parseJsonList(subcommitteesJson, COMMITTEE_DETAIL_TARGET)
+        this.committees = parseJsonList(subcommitteesJson,
+            COMMITTEE_DETAIL_TARGET
+        )
         this.subcommittees = this.committees
     }
 

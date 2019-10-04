@@ -1,4 +1,4 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.activities
 
 
 import android.content.Context
@@ -12,6 +12,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lambdaschool.congressdata.R
+import com.lambdaschool.congressdata.viewmodel.CongresspersonListViewModel
+import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter
+import com.lambdaschool.congressdata.viewmodel.themeUtils
 
 
 /*public class MainActivity extends LifecycleActivity  {
@@ -68,7 +72,8 @@ class MainActivity : AppCompatActivity() {
 
                 // using recycler view
                 overviewList?.let {
-                    listAdapter = OverviewListAdapter(overviewList)
+                    listAdapter =
+                        OverviewListAdapter(overviewList)
                     layoutList!!.adapter = listAdapter
                 }
                 // using scroll view

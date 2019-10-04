@@ -1,4 +1,4 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.viewmodel
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.lambdaschool.congressdata.activities.DetailsActivity
+import com.lambdaschool.congressdata.model.OfficialOverview
+import com.lambdaschool.congressdata.R
 
 import java.util.ArrayList
 
@@ -28,13 +31,13 @@ class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview>) : R
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, i: Int): OverviewListAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, i: Int): ViewHolder {
         context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.congressperson_list_layout, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: OverviewListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
 
         holder.textListName.text = data.displayName

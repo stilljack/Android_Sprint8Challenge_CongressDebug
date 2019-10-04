@@ -1,9 +1,9 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.viewmodel
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
+import com.lambdaschool.congressdata.R
 
 
 object themeUtils {
@@ -17,17 +17,24 @@ object themeUtils {
         val editor = prefs!!.edit()
 
         when (counter) {
-            0 -> cTheme = R.style.AppTheme_Lambda_Dark
-            1 -> cTheme = R.style.AppTheme
-            2 -> cTheme = R.style.AppTheme_Dark
-            3 -> cTheme = R.style.AppTheme_Lambda
+            0 -> cTheme =
+                R.style.AppTheme_Lambda_Dark
+            1 -> cTheme =
+                R.style.AppTheme
+            2 -> cTheme =
+                R.style.AppTheme_Dark
+            3 -> cTheme =
+                R.style.AppTheme_Lambda
         }
         counter = (counter + 1) % 4
 
         editor.putInt("Theme", cTheme)
         editor.putInt("Counter", counter)
         editor.apply()
-        changeToTheme(activity, cTheme)
+        changeToTheme(
+            activity,
+            cTheme
+        )
     }
 
     fun changeToTheme(activity: Activity, theme: Int) {
@@ -50,7 +57,9 @@ object themeUtils {
     fun getcTheme(activity: Activity): Int {
         if (cTheme == 0) {
             prefs = activity.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-            cTheme = prefs!!.getInt("Theme", R.style.AppTheme)
+            cTheme = prefs!!.getInt("Theme",
+                R.style.AppTheme
+            )
         }
         return cTheme
     }

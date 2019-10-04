@@ -1,6 +1,6 @@
-package com.lambdaschool.congressdata
+package com.lambdaschool.congressdata.model
 
-import com.lambdaschool.congressdata.congressdataapiaccess.CongresspersonOverview
+import com.lambdaschool.congressdata.importedjava.CongresspersonOverview
 
 
 class OfficialOverview {
