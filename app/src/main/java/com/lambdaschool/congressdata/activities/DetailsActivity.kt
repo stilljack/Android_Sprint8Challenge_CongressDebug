@@ -23,8 +23,10 @@ import com.lambdaschool.congressdata.viewmodel.themeUtils
 
 class DetailsActivity : AppCompatActivity() {
 
-    private var context: Context? = null
 
+    // oh god this is already a shit show
+
+    private var context: Context? = null
     private var profileImage: ImageView? = null
     private var profileName: TextView? = null
     private var profileParty: TextView? = null
@@ -36,7 +38,6 @@ class DetailsActivity : AppCompatActivity() {
     private var profileVotingBar: ProgressBar? = null
     private var profileCommitteeList: LinearLayout? = null
     private var profileSubcommitteeList: LinearLayout? = null
-
     private var activity: Activity? = null
 
     private var memberId: String? = null
@@ -75,7 +76,7 @@ class DetailsActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        viewModel.id = memberId
+        viewModel.id = memberId as String
 
         viewModel.profile?.observe(this, Observer<CongresspersonProfile> { profile ->
             runOnUiThread {
