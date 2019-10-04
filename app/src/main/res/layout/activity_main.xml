@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="600sp"
         tools:listitem="@layout/congressperson_list_layout"
-        app:layout_constraintBottom_toTopOf="@id/tv_test"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_test"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
 <TextView
     android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="button"
         android:id="@+id/btn_test"
-        app:layout_constraintTop_toBottomOf="@id/tv_test"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

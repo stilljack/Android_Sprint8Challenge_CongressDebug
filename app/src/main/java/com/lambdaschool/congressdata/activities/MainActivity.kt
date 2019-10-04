@@ -57,10 +57,9 @@ import retrofit2.HttpException
 class MainActivity : AppCompatActivity() {
  lateinit var i: CongressPersonAll
     private lateinit var layoutList: RecyclerView
-    private var layoutManager: RecyclerView.LayoutManager? = null
+   lateinit var layoutManager: RecyclerView.LayoutManager
     private lateinit var listAdapter: OverviewListAdapter
 
-    private var context: Context? = null
     private lateinit var viewModel: CongresspersonListViewModel
     val retro=ApiRetro.Factory.create()
 
@@ -78,13 +77,8 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
         setupRecyclerView()
         btn_test.setOnClickListener {
-            //a test to make sure test dependencies are correct
-            tv_test.text="test"
 
-           // tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
-         //   var say="sau"
-          //  dataList.drop(2)
-          //  updateRecyclerView(listAdapter, dataList)
+            tv_test.text="test"
 
         }
     }
@@ -118,7 +112,7 @@ class MainActivity : AppCompatActivity() {
      * @return TextView object with the text and tag set as provided
      */
     private fun getDefaultTextView(text: String, id: String): TextView {
-        val dataView = TextView(context)
+        val dataView = TextView(this)
         dataView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24f)
         dataView.setPadding(10, 20, 10, 20)
         dataView.typeface = Typeface.DEFAULT_BOLD
@@ -126,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         dataView.tag = id
 
         dataView.setOnClickListener { view ->
-            val intent = Intent(context, DetailsActivity::class.java)
+            val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra("id", view.tag.toString())
             startActivity(intent)
         }

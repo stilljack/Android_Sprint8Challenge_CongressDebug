@@ -42,7 +42,7 @@ class ViewTests {
     fun viewTest() {
         val correctDisplay ="test"
 
-        Thread.sleep(5000);
+        Thread.sleep(10000)
         onView(withId(R.id.btn_test))
             .perform(click())
 
