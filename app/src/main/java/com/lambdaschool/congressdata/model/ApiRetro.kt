@@ -28,13 +28,13 @@ interface ApiRetro {
         "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
     )
     @GET(URL_MEMBERS_HOUSE_CALIFORNIA)
-    fun getCACongressList(): Call<List<CongressPersonAll.Result.Member>>
+    fun getCACongressList(): Call<CongressPersonAll>
 
     @Headers(
         "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
     )
     @GET(URL_MEMBERS_HOUSE_ALL)
-    suspend fun getMemmbersAll(): Response<List<OfficialOverview>>
+    suspend fun getMemmbersAll(): Response<CongressPersonAll>
 
     @GET("pokemon-species/{name}")
     fun getPokemonDetails(@Path("name") name: String): Call<List<OfficialOverview>>

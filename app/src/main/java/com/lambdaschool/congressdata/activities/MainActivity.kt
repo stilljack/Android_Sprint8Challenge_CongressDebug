@@ -18,6 +18,7 @@ import com.lambdaschool.congressdata.importedjava.CongressDao.getAllMembers
 import com.lambdaschool.congressdata.importedjava.CongresspersonOverview
 import com.lambdaschool.congressdata.importedjava.NetworkAdapter
 import com.lambdaschool.congressdata.model.ApiRetro
+import com.lambdaschool.congressdata.model.CongressPersonAll
 import com.lambdaschool.congressdata.model.OfficialOverview
 import com.lambdaschool.congressdata.viewmodel.CongresspersonListViewModel
 import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter
@@ -53,7 +54,7 @@ import retrofit2.HttpException
 
 
 class MainActivity : AppCompatActivity() {
-
+ lateinit var i: CongressPersonAll
     private lateinit var layoutList: RecyclerView
     private var layoutManager: RecyclerView.LayoutManager? = null
     private lateinit var listAdapter: OverviewListAdapter
@@ -74,9 +75,9 @@ class MainActivity : AppCompatActivity() {
 
         layoutList = layout_list
         viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
-        setupRecyclerView()
+       // setupRecyclerView()
         btn_test.setOnClickListener {
-            tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
+           // tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
 
             CoroutineScope(Dispatchers.IO).launch {
 
@@ -86,8 +87,8 @@ class MainActivity : AppCompatActivity() {
                     try {
                         if (response.isSuccessful) {
                             //Do something with response e.g show to the UI.
-
-                            updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
+                             i =response.body() as CongressPersonAll
+                      //      updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
                         } else {
                             Toast.makeText(
                                 this@MainActivity,
@@ -175,10 +176,10 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         //Do something with response e.g show to the UI.
 
-                        updateRecyclerView(
-                            listAdapter,
-                            response.body() as ArrayList<OfficialOverview>
-                        )
+                   //     updateRecyclerView(
+                //            listAdapter,
+                   //         response.body() as ArrayList<OfficialOverview>
+           //             )
                     } else {
                         Toast.makeText(
                             this@MainActivity,
