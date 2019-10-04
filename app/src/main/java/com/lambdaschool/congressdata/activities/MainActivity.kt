@@ -78,10 +78,13 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
         setupRecyclerView()
         btn_test.setOnClickListener {
+            //a test to make sure test dependencies are correct
+            tv_test.text="test"
+
            // tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
-            var say="sau"
-            dataList.drop(2)
-            updateRecyclerView(listAdapter, dataList)
+         //   var say="sau"
+          //  dataList.drop(2)
+          //  updateRecyclerView(listAdapter, dataList)
 
         }
     }
