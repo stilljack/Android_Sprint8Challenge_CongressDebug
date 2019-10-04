@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.congressdata.activities.DetailsActivity
 import com.lambdaschool.congressdata.model.OfficialOverview
@@ -13,8 +14,22 @@ import com.lambdaschool.congressdata.R
 
 import java.util.ArrayList
 
-class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview>) : RecyclerView.Adapter<OverviewListAdapter.ViewHolder>() {
-    private var context: Context? = null
+class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview> = arrayListOf<OfficialOverview>()) : androidx.recyclerview.widget.ListAdapter<OfficialOverview,OverviewListAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<OfficialOverview>() {
+            override fun areItemsTheSame(oldItem: OfficialOverview, newItem: OfficialOverview): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: OfficialOverview, newItem: OfficialOverview): Boolean {
+                return oldItem.id == newItem.id &&
+                        oldItem.displayName == oldItem.displayName &&
+                        oldItem.party == newItem.party &&
+                        oldItem.state == newItem.state
+            }
+        }
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var textListName: TextView
@@ -32,7 +47,6 @@ class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview>) : R
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): ViewHolder {
-        context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.congressperson_list_layout, parent, false)
         return ViewHolder(view)
     }
@@ -46,9 +60,9 @@ class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview>) : R
 
         holder.cardParent.tag = data.id
         holder.cardParent.setOnClickListener { view ->
-            val intent = Intent(context, DetailsActivity::class.java)
+            val intent = Intent(view.context, DetailsActivity::class.java)
             intent.putExtra("id", view.tag.toString())
-            context!!.startActivity(intent)
+            view.context.startActivity(intent)
         }
     }
 

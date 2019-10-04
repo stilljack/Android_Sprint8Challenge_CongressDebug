@@ -13,9 +13,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.congressdata.R
+import com.lambdaschool.congressdata.importedjava.CongressDao.getAllMembers
+import com.lambdaschool.congressdata.importedjava.CongresspersonOverview
+import com.lambdaschool.congressdata.model.OfficialOverview
 import com.lambdaschool.congressdata.viewmodel.CongresspersonListViewModel
 import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter
 import com.lambdaschool.congressdata.viewmodel.themeUtils
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 /*public class MainActivity extends LifecycleActivity  {
@@ -42,9 +46,9 @@ import com.lambdaschool.congressdata.viewmodel.themeUtils
 
 class MainActivity : AppCompatActivity() {
 
-    private var layoutList: RecyclerView? = null
+    private lateinit var layoutList: RecyclerView
     private var layoutManager: RecyclerView.LayoutManager? = null
-    private var listAdapter: OverviewListAdapter? = null
+    private lateinit var listAdapter: OverviewListAdapter
 
     private var context: Context? = null
     private lateinit var viewModel: CongresspersonListViewModel
@@ -57,32 +61,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        context = this
-        layoutList = findViewById(R.id.layout_list)
-        layoutList!!.setHasFixedSize(true)
-        layoutManager = LinearLayoutManager(context)
-        layoutList!!.layoutManager = layoutManager
 
 
-        viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java!!)
-
-        viewModel.overviewList?.observe(this, Observer { overviewList ->
-            runOnUiThread {
-                assert(overviewList != null)
-
-                // using recycler view
-                overviewList?.let {
-                    listAdapter =
-                        OverviewListAdapter(overviewList)
-                    layoutList!!.adapter = listAdapter
-                }
-                // using scroll view
-                /*for (OfficialOverview officialOverview : overviewList) {
-                scrollData.addView(getDefaultTextView(officialOverview.getDisplayName(),
-                                                      officialOverview.getId()));
-            }*/
-            }
-        })
+        layoutList = layout_list
+        viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
+        setupRecyclerView()
+        btn_test.setOnClickListener {  }
+        updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
     }
 
     override fun setTheme(themeId: Int) {
@@ -127,4 +112,29 @@ class MainActivity : AppCompatActivity() {
         }
         return dataView
     }
+
+    fun setupRecyclerView() {
+
+        layoutList.setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(this)
+        layoutList.layoutManager = layoutManager
+        listAdapter = OverviewListAdapter()
+        layoutList.adapter = listAdapter
+        viewModel.overviewList?.observe(this, Observer {
+
+                it?.let {
+                    updateRecyclerView(listAdapter,it)
+                }
+        })
+
+
+    }
+
+
+    fun updateRecyclerView(adapter: OverviewListAdapter,congoList:ArrayList<OfficialOverview>) {
+        adapter.submitList(congoList as ArrayList<OfficialOverview>)
+        adapter.notifyDataSetChanged()
+    }
+
+
 }
