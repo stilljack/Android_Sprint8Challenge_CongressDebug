@@ -6,13 +6,12 @@ import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.runner.AndroidJUnitRunner
+import com.lambdaschool.congressdata.activities.DetailsActivity
 import com.lambdaschool.congressdata.activities.MainActivity
 import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter.Companion.dataList
 import okhttp3.internal.wait
@@ -25,7 +24,68 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.junit.runners.MethodSorters
 import java.util.regex.Matcher
+import android.content.Intent
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.ActivityTestRule
+import com.lambdaschool.congressdata.activities.MainActivity
 
+
+
+
+
+@RunWith(AndroidJUnit4ClassRunner::class)
+@LargeTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+class ViewdetailsIDTests {
+/*
+    "id": "Z000018",
+                "title": "Representative",
+               "short_title": "Rep.",
+                  "api_uri":"https://api.propublica.org/congress/v1/members/Z000018.json",
+                   "first_name": "Ryan",
+                "middle_name": null,
+               "suffix": null,
+*/
+
+
+
+    //params :
+    val id = "Z000018"
+    val firstname="Ryan"
+    val lastname="Zinke"
+    val uri ="https://api.propublica.org/congress/v1/members/Z000018.json"
+
+
+    @Rule
+    @JvmField
+    var activityScenarioRule = ActivityScenarioRule(DetailsActivity::class.java)
+    @Rule
+    var DetailsActivityTestRule: ActivityTestRule<DetailsActivity> =
+        object : ActivityTestRule<DetailsActivity>(DetailsActivity::class.java) {
+            override fun getActivityIntent(): Intent {
+                val intent = Intent(InstrumentationRegistry.getInstrumentation().context, DetailsActivity::class.java)
+                intent.putExtra("id", "Value")
+                return intent
+            }
+        }
+
+
+
+
+
+    @Test
+    fun viewTest() {
+        val correctDisplay =firstname
+
+        Thread.sleep(3000)
+    //    onView(withId(R.id.btn_test))
+   //         .perform(click())
+
+        onView(withId(R.id.profile_name))
+            .check(matches(withSubstring(correctDisplay)))
+    }
+}
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @LargeTest
