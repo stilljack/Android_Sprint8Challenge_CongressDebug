@@ -11,20 +11,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.congressdata.activities.DetailsActivity
 import com.lambdaschool.congressdata.model.OfficialOverview
 import com.lambdaschool.congressdata.R
+import com.lambdaschool.congressdata.model.CongressPersonAll
+import kotlinx.android.synthetic.main.congressperson_list_layout.view.*
 
 import java.util.ArrayList
 
-class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview> = arrayListOf<OfficialOverview>()) : androidx.recyclerview.widget.ListAdapter<OfficialOverview,OverviewListAdapter.ViewHolder>(DIFF_CALLBACK) {
+class OverviewListAdapter(private val dataList: List<CongressPersonAll.Result.Member> = listOf<CongressPersonAll.Result.Member>()) : androidx.recyclerview.widget.ListAdapter<CongressPersonAll.Result.Member,OverviewListAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<OfficialOverview>() {
-            override fun areItemsTheSame(oldItem: OfficialOverview, newItem: OfficialOverview): Boolean {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CongressPersonAll.Result.Member>() {
+            override fun areItemsTheSame(oldItem: CongressPersonAll.Result.Member, newItem: CongressPersonAll.Result.Member): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: OfficialOverview, newItem: OfficialOverview): Boolean {
+            override fun areContentsTheSame(oldItem: CongressPersonAll.Result.Member, newItem: CongressPersonAll.Result.Member): Boolean {
                 return oldItem.id == newItem.id &&
-                        oldItem.displayName == oldItem.displayName &&
+                        oldItem.district == newItem.district &&
                         oldItem.party == newItem.party &&
                         oldItem.state == newItem.state
             }
@@ -32,18 +34,11 @@ class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview> = ar
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var textListName: TextView
-        var textListParty: TextView
-        var textListState: TextView
-        var cardParent: ViewGroup
+        var textListName: TextView =view.text_list_name
+        var textListParty: TextView =view.text_list_party
+        var textListState: TextView= view.text_list_state
+        var cardParent: ViewGroup = view.card_view
 
-        init {
-
-            textListName = view.findViewById(R.id.text_list_name)
-            textListParty = view.findViewById(R.id.text_list_party)
-            textListState = view.findViewById(R.id.text_list_state)
-            cardParent = view.findViewById(R.id.card_view)
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, i: Int): ViewHolder {
@@ -53,8 +48,8 @@ class OverviewListAdapter(private val dataList: ArrayList<OfficialOverview> = ar
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
-
-        holder.textListName.text = data.displayName
+        val name ="${data.firstName} ${data.lastName}"
+        holder.textListName.text = name
         holder.textListParty.text = data.party
         holder.textListState.text = data.state
 

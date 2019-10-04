@@ -75,45 +75,11 @@ class MainActivity : AppCompatActivity() {
 
         layoutList = layout_list
         viewModel = ViewModelProviders.of(this).get(CongresspersonListViewModel::class.java)
-       // setupRecyclerView()
+        setupRecyclerView()
         btn_test.setOnClickListener {
            // tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
 
-            CoroutineScope(Dispatchers.IO).launch {
 
-               // updateRecyclerView(layoutList.adapter as OverviewListAdapter,getAllMembers() as ArrayList<OfficialOverview>)
-                val response = retro.getMemmbersAll()
-                withContext(Dispatchers.Main) {
-                    try {
-                        if (response.isSuccessful) {
-                            //Do something with response e.g show to the UI.
-                             i =response.body() as CongressPersonAll
-                            i.results[0].members
-                      //      updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
-                        } else {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Error: ${response.code()}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    } catch (e: HttpException) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Error: ${e.message()}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } catch (e: Throwable) {
-                        e.printStackTrace()
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Error: ${e.printStackTrace()}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                }
-            }
         }
     }
 
@@ -176,11 +142,9 @@ class MainActivity : AppCompatActivity() {
                 try {
                     if (response.isSuccessful) {
                         //Do something with response e.g show to the UI.
-
-                   //     updateRecyclerView(
-                //            listAdapter,
-                   //         response.body() as ArrayList<OfficialOverview>
-           //             )
+                        i =response.body() as CongressPersonAll
+                        updateRecyclerView(listAdapter, i.results[0].members)
+                        //      updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
                     } else {
                         Toast.makeText(
                             this@MainActivity,
@@ -206,14 +170,15 @@ class MainActivity : AppCompatActivity() {
             }
 
 
+
         }
 
     }
         fun updateRecyclerView(
             adapter: OverviewListAdapter,
-            congoList: ArrayList<OfficialOverview>
+            congoList: List<CongressPersonAll.Result.Member>
         ) {
-            adapter.submitList(congoList as ArrayList<OfficialOverview>)
+            adapter.submitList(congoList)
             adapter.notifyDataSetChanged()
         }
 
