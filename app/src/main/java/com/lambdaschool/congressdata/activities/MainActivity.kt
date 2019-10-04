@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             //Do something with response e.g show to the UI.
                              i =response.body() as CongressPersonAll
+                            i.results[0].members
                       //      updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
                         } else {
                             Toast.makeText(
