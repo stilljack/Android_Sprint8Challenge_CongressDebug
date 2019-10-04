@@ -16,9 +16,10 @@ import kotlinx.android.synthetic.main.congressperson_list_layout.view.*
 
 import java.util.ArrayList
 
-class OverviewListAdapter(private val dataList: List<CongressPersonAll.Result.Member> = listOf<CongressPersonAll.Result.Member>()) : androidx.recyclerview.widget.ListAdapter<CongressPersonAll.Result.Member,OverviewListAdapter.ViewHolder>(DIFF_CALLBACK) {
+class OverviewListAdapter(var dataList: MutableList<CongressPersonAll.Result.Member>) : androidx.recyclerview.widget.ListAdapter<CongressPersonAll.Result.Member,OverviewListAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     companion object {
+        var dataList = mutableListOf<CongressPersonAll.Result.Member>()
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CongressPersonAll.Result.Member>() {
             override fun areItemsTheSame(oldItem: CongressPersonAll.Result.Member, newItem: CongressPersonAll.Result.Member): Boolean {
                 return oldItem.id == newItem.id

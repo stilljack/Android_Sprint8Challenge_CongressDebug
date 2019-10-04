@@ -22,6 +22,7 @@ import com.lambdaschool.congressdata.model.CongressPersonAll
 import com.lambdaschool.congressdata.model.OfficialOverview
 import com.lambdaschool.congressdata.viewmodel.CongresspersonListViewModel
 import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter
+import com.lambdaschool.congressdata.viewmodel.OverviewListAdapter.Companion.dataList
 import com.lambdaschool.congressdata.viewmodel.themeUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
@@ -78,7 +79,9 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
         btn_test.setOnClickListener {
            // tv_test.text = NetworkAdapter.httpGetRequest("http://google.com")
-
+            var say="sau"
+            dataList.drop(2)
+            updateRecyclerView(listAdapter, dataList)
 
         }
     }
@@ -129,10 +132,10 @@ class MainActivity : AppCompatActivity() {
 
     fun setupRecyclerView() {
 
-        layoutList.setHasFixedSize(true)
+       // layoutList.setHasFixedSize(true)
         layoutManager = LinearLayoutManager(this)
+        listAdapter = OverviewListAdapter(dataList)
         layoutList.layoutManager = layoutManager
-        listAdapter = OverviewListAdapter()
         layoutList.adapter = listAdapter
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -143,7 +146,9 @@ class MainActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         //Do something with response e.g show to the UI.
                         i =response.body() as CongressPersonAll
-                        updateRecyclerView(listAdapter, i.results[0].members)
+                        dataList.addAll(i.results[0].members)
+                        i=i
+                        updateRecyclerView(listAdapter, dataList)
                         //      updateRecyclerView(listAdapter,response.body() as ArrayList<OfficialOverview>)
                     } else {
                         Toast.makeText(
