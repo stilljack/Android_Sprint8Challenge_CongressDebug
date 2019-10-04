@@ -28,14 +28,14 @@ interface ApiInterface {
         "x-api-key: glCbNQgEiisCdhTwucffBYZfvBXiHCiZ18S2pEFL"
     )
     @GET(URL_MEMBERS_HOUSE_CALIFORNIA)
-    fun getCACongressList(): Call<OfficialOverview>
+    fun getCACongressList(): Call<List<OfficialOverview>>
 
 
     @GET(URL_MEMBERS_HOUSE_ALL)
     fun getPokemonForm(): Call<OfficialOverview>
 
     @GET("pokemon-species/{name}")
-    fun getPokemonDetails(@Path("name") name: String): Call<OfficialOverview>
+    fun getPokemonDetails(@Path("name") name: String): Call<List<OfficialOverview>>
 
     @GET("pokedex/{id}")
     suspend fun getSusPokedex(@Path("id") id:String): Response<OfficialOverview>
@@ -78,7 +78,7 @@ interface ApiInterface {
 
 
             private val TIMEOUT = 3000
-            
+
             var pokedexList = mutableListOf<OfficialOverview>()
             val gson = Gson()
 
